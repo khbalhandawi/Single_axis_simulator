@@ -1,6 +1,6 @@
 # Single_axis_simulator
 
-This project is aimed at estimating drone position and velocity using sensor fusion of IMU measurements with position trackers.
+This project is aimed at generating simulation kinematic data for testing the SMO filter and benchmarking against others using parametrized error metrics listed below.
 
 # Installation
 
