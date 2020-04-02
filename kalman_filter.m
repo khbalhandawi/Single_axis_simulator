@@ -5,14 +5,10 @@ clc
 
 %% Model (USED Tutorial: The Kalman Filter by Lacey, Tony)
 dt=0.001;
-psi=[1 dt;0 1];
-B=[(dt^2)/2 ; dt];
-var_w=0.1^2;
-Q=B*B'.*var_w; %prediction noise
-H=[1 0];
-R=0.001^2; %measurement noise
-N = 20; % # of delayed measurements (time = N*dt)
-L = 50; % # of downsampled measurements
+R=0.000^2; %measurement noise
+N = 40; % # of delayed measurements (time = N*dt)
+L = 50; % # FRQUENCY of downsampled measurements for position in Hz 1000 / 50 = 40 Units 
+% optimal anti-delay = ( 1 / (dt * L * 2)) + N
 
 %% Simulate model
 simOut = run_simulation_model(dt,R,N,L);
@@ -25,9 +21,19 @@ plot(pos_vec);
 hold on
 plot(pos_ds_vec);
 
+xlabel('Time (s)')
+ylabel('Position (m)')
+legend('groundtruth','manipulated signal')
+
 return
 
 %% Run the filter
+psi=[1 dt;0 1];
+B=[(dt^2)/2 ; dt];
+var_w=0.1^2;
+Q=B*B'.*var_w; %prediction noise
+H=[1 0];
+
 x_0=[0 0]; % Initial estimator states
 x = SPKF(acc_vec,pos_ds_vec,x_0,B,H,N,R,psi);
 
